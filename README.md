@@ -10,10 +10,11 @@ Communicate with Nessus Scanner (version 6+) over REST/JSON interface
 ```ruby
 require 'nessus_rest'
 
-n = NessusREST::Client.new (
+n = NessusREST::Client.new(
 	url: 'https://localhost:8834',
 	username: 'user',
-	password: 'password')
+	password: 'password',
+	read_timeout: 30)
 qs = n.scan_quick_template('basic','name-of-scan','localhost')
 scanid = qs['scan']['id']
 n.scan_wait4finish(scanid)

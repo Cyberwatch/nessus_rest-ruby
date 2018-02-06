@@ -17,11 +17,8 @@ module NessusREST
       uri = URI.parse(options[:url])
       @connection = Net::HTTP.new(uri.host, uri.port)
       @connection.use_ssl = options[:ssl_use]
-      @connection.verify_mode = if options[:ssl_verify]
-                                  OpenSSL::SSL::VERIFY_PEER
-                                else
-                                  OpenSSL::SSL::VERIFY_NONE
-                                end
+      @connection.verify_mode = options[:ssl_verify] ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+      @connection.read_timeout = options[:read_timeout] || @connection.read_timeout
     end
 
     def request(req)
